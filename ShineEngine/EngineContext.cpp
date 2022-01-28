@@ -128,7 +128,7 @@ void EngineContext::StartRender()
 		glClear(GL_COLOR_BUFFER_BIT);
 		glClearColor(0, 0.09f, 0.21f, 1.0f);
 
-		//RenderEvent();
+		RenderEvent();
 		
 		Renderer.DrawAll();
 		

@@ -1,6 +1,12 @@
 #include "stdafx.h"
 #include "VertexBuffer.h"
 
+
+/// <summary>
+/// Creates VertexBuffer object with given data and size(in bytes)
+/// </summary>
+/// <param name="data">The vertices data it self</param>
+/// <param name="size">data's size in bytes</param>
 VertexBuffer::VertexBuffer(const void* data, unsigned int size)
 {
 	glGenBuffers(1, &m_RendererId);
@@ -10,23 +16,20 @@ VertexBuffer::VertexBuffer(const void* data, unsigned int size)
 
 VertexBuffer::~VertexBuffer()
 {
-	//this->Delete();
+	this->Delete();
 }
 
-// Binds the VBO
 void VertexBuffer::Bind() const
 {
 	glBindBuffer(GL_ARRAY_BUFFER, m_RendererId);
 }
 
-// Unbinds the VBO
 void VertexBuffer::Unbind() const
 {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-// Deletes the VBO
 void VertexBuffer::Delete() const
 {
-	//glDeleteBuffers(1, &m_RendererId);
+	glDeleteBuffers(1, &m_RendererId);
 }
