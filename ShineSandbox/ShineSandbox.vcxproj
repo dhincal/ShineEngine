@@ -172,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Basic.shader" />
+    <None Include="res\default.shader" />
     <None Include="res\Fragment.shader" />
     <None Include="res\Vertex.shader" />
   </ItemGroup>

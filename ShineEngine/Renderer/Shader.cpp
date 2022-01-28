@@ -12,6 +12,16 @@
 Shader::Shader(const std::string& filePath) :m_FilePath(filePath), m_RendererId(0)
 {
 	ShaderProgramSource source = ParseShader(filePath);
+
+	// if there is no source for at least one of them
+	if (source.VertexSource == "" || source.FragmentSource == "")
+	{
+		std::cout << "No Vertex Source Or Fragment Source !! \n Maybe file isn't found or loaded properly. \n\n";
+		ASSERT(true);
+	}
+
+	
+	
 	m_RendererId = CreateShader(source.VertexSource, source.FragmentSource);
 }
 
@@ -127,7 +137,7 @@ const std::string& Shader::LoadShaderFile(const std::string& filePath)
 
 
 
-void Shader::LoadShaderFile(const std::string& filePath,std::string& srcVar)
+void Shader::LoadShaderFile(const std::string& filePath, std::string& srcVar)
 {
 
 
