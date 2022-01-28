@@ -1,7 +1,6 @@
 #version 330
 
 layout(location = 0) in vec2 posit;
-layout(location = 1) in float alpha;
 
 
 
