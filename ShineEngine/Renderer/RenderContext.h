@@ -24,6 +24,7 @@ public:
 	void Draw(IndexBuffer ib, VertexArray va);
 	void DrawAll();
 	void AddObject(VertexArray* va,  VertexBuffer* vb,IndexBuffer* ib,Shader* shader);
+	void AddObject(VertexArray* va,  VertexBuffer* vb,IndexBuffer* ib);
 
 
 };

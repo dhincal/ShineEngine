@@ -58,10 +58,10 @@ void EngineContext::StartRender()
 	//};
 
 	float Quad_vertices[] = {
-	   0.2f, -0.2f,  0.7f, // sol alt
-	   0.6f, -0.2f,  0.5f,// sag alt
-	   0.6f,  0.2f,  0.1f,// sag ust
-	   0.2f,  0.2f,  0.3f,// sol ust
+	   0.2f, -0.2f,  0.9f, // sol alt
+	   0.6f, -0.2f,  0.9f, // sag alt
+	   0.6f,  0.2f,  0.0f, // sag ust
+	   0.2f,  0.2f,  0.0f, // sol ust
 	};
 
 	unsigned int Quad_indices[] = {
@@ -87,7 +87,7 @@ void EngineContext::StartRender()
 
 	VertexArray Quad_va;
 	VertexBuffer Quad_vb(Quad_vertices, sizeof(Quad_vertices));
-	Shader Quad_sh("res/VertexShader.osuruk", "res/FragmentShader.osuruk");
+	
 
 
 	VertexBufferLayout Quad_layout;
@@ -102,8 +102,6 @@ void EngineContext::StartRender()
 
 	VertexArray Tri_va;
 	VertexBuffer Tri_vb(Tri_vertices, sizeof(Tri_vertices));
-	Shader Tri_sh("res/VertexShader.osuruk", "res/FragmentShader.osuruk");
-
 
 	VertexBufferLayout Tri_layout;
 	Tri_layout.Push<float>(2);
@@ -112,17 +110,17 @@ void EngineContext::StartRender()
 	IndexBuffer Tri_ib(Tri_indices, 6);
 
 
-	Tri_sh.Unbind();
 	Tri_va.Unbind();
 	Tri_vb.Unbind();
 
-	Quad_sh.Unbind();
 	Quad_va.Unbind();
 	Quad_vb.Unbind();
 
+	Shader quad("res/Basic.shader");
+	Shader tri("res/Vertex.shader","res/Fragment.shader");
 
-	Renderer.AddObject(&Quad_va, &Quad_vb, &Quad_ib, &Quad_sh);
-	Renderer.AddObject(&Tri_va, &Tri_vb, &Tri_ib, &Tri_sh);
+	Renderer.AddObject(&Quad_va, &Quad_vb, &Quad_ib,&quad);
+	Renderer.AddObject(&Tri_va, &Tri_vb, &Tri_ib,&tri);
 	
 	while (!glfwWindowShouldClose(m_window))
 	{
@@ -131,34 +129,12 @@ void EngineContext::StartRender()
 		glClearColor(0, 0.09f, 0.21f, 1.0f);
 
 		//RenderEvent();
-
-		Quad_sh.Bind();
-		//Quad_va.Bind();
-		//Quad_vb.Bind();
-
-		//Renderer.Draw(Quad_ib,Quad_va);
 		
 		Renderer.DrawAll();
 		
-		//Tri_sh.Unbind();
-		//Tri_va.Unbind();
-		//Tri_vb.Unbind();
-		//Renderer.Draw(Tri_ib, Tri_va);
-		//GL_Call(glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr));
-
-
-		/*
-			vao bind
-			vbo bind
-			ibo bind
-
-
-			vao unbind;
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		
+
 		
-		*/
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(m_window);

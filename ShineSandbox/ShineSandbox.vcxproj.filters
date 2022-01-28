@@ -21,7 +21,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Basic.shader" />
-    <None Include="res\FragmentShader.osuruk" />
-    <None Include="res\VertexShader.osuruk" />
+    <None Include="res\Fragment.shader" />
+    <None Include="res\Vertex.shader" />
   </ItemGroup>
 </Project>
