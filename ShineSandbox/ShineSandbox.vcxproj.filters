@@ -24,5 +24,6 @@
     <None Include="res\Fragment.shader" />
     <None Include="res\Vertex.shader" />
     <None Include="res\default.shader" />
+    <None Include="res\Cube.shader" />
   </ItemGroup>
 </Project>

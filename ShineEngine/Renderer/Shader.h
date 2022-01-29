@@ -24,7 +24,7 @@ private:
 	const std::string& LoadShaderFile(const std::string& filePath);
 	void LoadShaderFile(const std::string& filePath, std::string& srcVar);
 
-	unsigned int CompileShader(unsigned int type,const std::string& source);
+	unsigned int CompileShader(unsigned int type, const std::string& source);
 	unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader);
 	unsigned int GetUniformLocation(const std::string& name);
 
@@ -38,6 +38,8 @@ public:
 
 	void SetUniform1f(const std::string& name, float v0);
 	void SetUniform3f(const std::string& name, float v0, float v1, float v2);
+	void SetUniformMat4x4(const std::string& name, const float* ptr, int count=1, bool transpose=false);
+
 
 };
 
