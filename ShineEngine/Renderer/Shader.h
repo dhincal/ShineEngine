@@ -37,6 +37,7 @@ public:
 	void Unbind() const;
 
 	void SetUniform1f(const std::string& name, float v0);
+	void SetUniform3f(const std::string& name, float v0, float v1, float v2);
 
 };
 

@@ -190,12 +190,22 @@ void Shader::SetUniform1f(const std::string& name, float v0)
 	GL_Call(glUniform1f(GetUniformLocation(name), v0));
 }
 
+void Shader::SetUniform3f(const std::string& name, float v0, float v1, float v2)
+{
+	GL_Call(glUniform3f(GetUniformLocation(name), v0,v1,v2));
+}
+
+
+
 unsigned int Shader::GetUniformLocation(const std::string& name)
 {
 	GL_Call(int location = glGetUniformLocation(m_RendererId, name.c_str()));
 
 	if (location == -1)
-		std::cout << "Warning:  `" << name << "` named uniform doesn't exist.";
+	{
+		std::cout << "Warning:  `" << name << "` named uniform doesn't exist. \n\n";
+		ASSERT(false);
+	}
 	return (unsigned int)location;
 }
 
