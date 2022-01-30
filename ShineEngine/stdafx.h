@@ -11,10 +11,12 @@
 static void GL_ClearError()
 {
 	while (glGetError() != GL_NO_ERROR);
+	//Cleans all errors in OpenGL
 }
 
 static bool GL_LogCall(const char* function, const char* file, int line)
 {
+	//If there is an error in OpenGL
 	while (GLenum error = glGetError())
 	{
 		std::cout << "[OpenGL Error] (" << error << "): " << function << " " << file << ":" << line << std::endl;
