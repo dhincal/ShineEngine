@@ -5,15 +5,67 @@
 #include "GLM/gtc/matrix_transform.hpp"
 #include <glm/gtc/type_ptr.hpp>
 #include "GLM/mat4x4.hpp"
+#include <ImGui/imgui.h>
 
 EngineContext engineContext;
-Shader* sh; 
-glm::mat4 mvp;
+Shader* sh;
+glm::mat4 mvp = glm::mat4();
 
+float x = 0, y = 0, z = -1;
+float modelx = 0, modely = 0, modelz = 0;
 void OnRender()
 {
-	//sh->Bind();
-	//sh->SetUniformMat4x4("mvp", glm::value_ptr(mvp));
+	sh->Bind();
+	sh->SetUniformMat4x4("mvp", glm::value_ptr(mvp));
+
+
+	glm::mat4 model = glm::translate(
+		glm::mat4(1.0f),			// matrix to translate
+		glm::vec3(0.0, 0.0, -4.0)	// translation vector
+	);
+	model = glm::rotate(
+		model,
+		glm::radians(modelx),
+		glm::vec3(1.0f, 0.0f, 0.0f)
+	);
+	model = glm::rotate(
+		model,
+		glm::radians(modely),
+		glm::vec3(0.0f, 1.0f, 0.0f)
+	);
+
+	model = glm::rotate(
+		model,
+		glm::radians(modelz),
+		glm::vec3(0.0f, 0.0f, 1.0f)
+	);
+
+	glm::mat4 view = glm::lookAt(
+		glm::vec3(x, y, z),	// eye
+		glm::vec3(0.0, 0.0, 0.0),	// center
+		glm::vec3(0.0, 1.0, 0.0)	// up vector
+	);
+
+	glm::mat4 projection = glm::perspective(
+		((float)640 / 480) / (16.0f / 9.0f), // FOV
+		640.0f / 480.0f, // aspect ratio
+		0.1f, //near
+		10.0f //far
+	);
+	mvp = projection * view * model;
+
+
+	ImGui::Begin("Window 1");
+
+	ImGui::DragFloat("Eye PosX", &x, 0.005f);
+	ImGui::DragFloat("Eye PosY", &y, 0.005f);
+	ImGui::DragFloat("Eye PosZ", &z, 0.005f);
+
+	ImGui::DragFloat("model X", &modelx, 0.005f);
+	ImGui::DragFloat("Model Y", &modely, 0.005f);
+	ImGui::DragFloat("Model Z", &modelz, 0.005f);
+
+	ImGui::End();
 }
 
 int main()
@@ -25,79 +77,52 @@ int main()
 	engineContext.SetRenderEvent(OnRender);
 	engineContext.StartWindow(640, 480, "Hello Engine");
 
-	/*float vertices[] = {
-			0.5f, 0.0f,   0.4f,
-			0.0f, 0.5f,   0.4f,
-		   -0.5f, 0.0f,   0.4f,
+	float Cube_Vertices[] = {
+		// front			
+		-1.0, -1.0,  1.0,	1.0, 0.0, 0.0,
+		 1.0, -1.0,  1.0,	0.0, 1.0, 0.0,
+		 1.0,  1.0,  1.0,	0.0, 0.0, 1.0,
+		-1.0,  1.0,  1.0,	1.0, 1.0, 1.0,
+		// back			
+		-1.0, -1.0, -1.0,	1.0, 0.0, 0.0,
+		 1.0, -1.0, -1.0,	0.0, 1.0, 0.0,
+		 1.0,  1.0, -1.0,	0.0, 0.0, 1.0,
+		-1.0,  1.0, -1.0,	1.0, 1.0, 1.0
 	};
 	unsigned int indices[] = {
-		0,1,2
+		// front
+		0, 1, 2,
+		2, 3, 0,
+		// right
+		1, 5, 6,
+		6, 2, 1,
+		// back
+		7, 6, 5,
+		5, 4, 7,
+		// left
+		4, 0, 3,
+		3, 7, 4,
+		// bottom
+		4, 5, 1,
+		1, 0, 4,
+		// top
+		3, 2, 6,
+		6, 7, 3
 	};
-	*/
-	/*
-		float Cube_Vertices[] = {
-			// front			Colors
-			-1.0, -1.0,  1.0,	1.0, 0.0, 0.0,
-			 1.0, -1.0,  1.0,	0.0, 1.0, 0.0,
-			 1.0,  1.0,  1.0,	0.0, 0.0, 1.0,
-			-1.0,  1.0,  1.0,	1.0, 1.0, 1.0,
-			// back				Colors
-			-1.0, -1.0, -1.0,   1.0, 0.0, 0.0,
-			 1.0, -1.0, -1.0,	0.0, 1.0, 0.0,
-			 1.0,  1.0, -1.0,	0.0, 0.0, 1.0,
-			-1.0,  1.0, -1.0,	1.0, 1.0, 1.0
-		};
-		unsigned int indices[] = {
-			// front
-			0, 1, 2,
-			2, 3, 0,
-			// right
-			1, 5, 6,
-			6, 2, 1,
-			// back
-			7, 6, 5,
-			5, 4, 7,
-			// left
-			4, 0, 3,
-			3, 7, 4,
-			// bottom
-			4, 5, 1,
-			1, 0, 4,
-			// top
-			3, 2, 6,
-			6, 7, 3
-		};
 
-		VertexArray va;
-		VertexBuffer vb(Cube_Vertices, sizeof(Cube_Vertices));
+	VertexArray va;
+	VertexBuffer vb(Cube_Vertices, sizeof(Cube_Vertices));
 
-		VertexBufferLayout layout;
-		layout.Push<float>(3);
-		layout.Push<float>(3);
-		va.AddBuffer(vb, layout);
+	VertexBufferLayout layout;
+	layout.Push<float>(3);
+	layout.Push<float>(3);
+	va.AddBuffer(vb, layout);
 
-		IndexBuffer ib(indices, 12);
-		sh = new Shader("res/Cube.shader");
+	IndexBuffer ib(indices, 36);
+	sh = new Shader("res/Cube.shader");
 
-		glm::mat4 model = glm::translate(
-			glm::mat4(1.0f),			// matrix to translate
-			glm::vec3(0.0, 0.0, -4.0)	// translation vector
-		);
-		glm::mat4 view = glm::lookAt(
-			glm::vec3(0.0, 0.0, 0.0),	// eye
-			glm::vec3(0.0, 0.0, 0.0),	// center
-			glm::vec3(0.0, 1.0, 0.0)	// up vector
-		);
-	
-		glm::mat4 projection = glm::perspective(
-			((float)640 / 480) / (16.0f / 9.0f), // FOV
-			640.0f / 480.0f, // aspect ratio
-			0.1f, //near
-			10.0f //far
-		);
-		mvp = projection * view * model;
-	*/
-	//engineContext.Renderer.AddObject(&va, &vb, &ib, sh);
+
+	engineContext.Renderer.AddObject(&va, &vb, &ib, sh);
 
 	engineContext.StartRender();
 }
