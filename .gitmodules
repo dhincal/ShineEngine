@@ -1,3 +1,0 @@
-[submodule "Dependencies/ImGui"]
-	path = Dependencies/ImGui
-	url = https://github.com/ocornut/imgui
