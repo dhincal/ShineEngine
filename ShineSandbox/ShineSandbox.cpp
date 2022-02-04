@@ -9,10 +9,13 @@
 
 EngineContext engineContext;
 Shader* sh;
-glm::mat4 mvp = glm::mat4();
+glm::mat4 mvp = glm::mat4(1.0f);
 
-float x = 0, y = 0, z = -1;
-float modelx = 0, modely = 0, modelz = 0;
+glm::vec3 modelPos;
+glm::vec3 CamRot;
+
+Camera cam;
+
 void OnRender()
 {
 	sh->Bind();
@@ -21,51 +24,33 @@ void OnRender()
 
 	glm::mat4 model = glm::translate(
 		glm::mat4(1.0f),			// matrix to translate
-		glm::vec3(0.0, 0.0, -4.0)	// translation vector
+		glm::vec3(modelPos.x, modelPos.y, modelPos.z)	// translation vector
 	);
-	model = glm::rotate(
-		model,
-		glm::radians(modelx),
-		glm::vec3(1.0f, 0.0f, 0.0f)
-	);
-	model = glm::rotate(
-		model,
-		glm::radians(modely),
-		glm::vec3(0.0f, 1.0f, 0.0f)
-	);
-
-	model = glm::rotate(
-		model,
-		glm::radians(modelz),
-		glm::vec3(0.0f, 0.0f, 1.0f)
-	);
-
-	glm::mat4 view = glm::lookAt(
-		glm::vec3(x, y, z),	// eye
-		glm::vec3(0.0, 0.0, 0.0),	// center
-		glm::vec3(0.0, 1.0, 0.0)	// up vector
-	);
-
 	glm::mat4 projection = glm::perspective(
 		((float)640 / 480) / (16.0f / 9.0f), // FOV
 		640.0f / 480.0f, // aspect ratio
 		0.1f, //near
 		10.0f //far
 	);
-	mvp = projection * view * model;
 
+
+	mvp = projection * cam.GetViewMatrix() * model;
+	glm::vec3* pos = cam.GetPositionPointer();
+	
 
 	ImGui::Begin("Window 1");
 
-	ImGui::DragFloat("Eye PosX", &x, 0.005f);
-	ImGui::DragFloat("Eye PosY", &y, 0.005f);
-	ImGui::DragFloat("Eye PosZ", &z, 0.005f);
+	ImGui::Text("view = %.3f, %.3f ,%.3f", pos->x, pos->y, pos->z);
 
-	ImGui::DragFloat("model X", &modelx, 0.005f);
-	ImGui::DragFloat("Model Y", &modely, 0.005f);
-	ImGui::DragFloat("Model Z", &modelz, 0.005f);
+	ImGui::DragFloat3("Eye Pos", &pos->x, 0.005f);
+	ImGui::DragFloat3("Model Pos", &modelPos[0],0.005f);
+	ImGui::DragFloat3("Rotation ",&CamRot.x);
 
 	ImGui::End();
+
+	cam.SetRotation(CamRot);
+	cam.Refresh();
+	
 }
 
 int main()

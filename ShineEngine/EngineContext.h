@@ -2,6 +2,7 @@
 #include <GLAD/glad.h>
 #include "GLFW/glfw3.h"
 #include "Renderer/RenderContext.h"
+#include "Entity/Camera.h"
 
 
 
@@ -9,6 +10,7 @@ class EngineContext
 {
 public:
 	RenderContext Renderer;
+	Camera Camera;
 
 	EngineContext();
 	void Init_GLFW();

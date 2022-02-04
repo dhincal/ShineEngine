@@ -22,7 +22,7 @@
 void CheckErrorInShader(unsigned int shaderId);
 
 EngineContext::EngineContext()
-	:RenderEvent(), m_window()
+	:RenderEvent(), m_window(),Camera()
 {
 	Renderer = RenderContext();
 }
