@@ -66,13 +66,7 @@
     <ClInclude Include="Entity\Camera.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\GameObject.h">
-      <Filter>Üst Bilgi Dosyaları</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\Component.h">
-      <Filter>Üst Bilgi Dosyaları</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\TransformComponent.h">
+    <ClInclude Include="Entity\Input.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
   </ItemGroup>
@@ -125,13 +119,7 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\GameObject.cpp">
-      <Filter>Kaynak Dosyalar</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\Component.cpp">
-      <Filter>Kaynak Dosyalar</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\TransformComponent.cpp">
+    <ClCompile Include="Entity\Input.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
   </ItemGroup>

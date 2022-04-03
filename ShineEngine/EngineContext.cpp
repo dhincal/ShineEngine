@@ -19,28 +19,12 @@
 #include "ImGui_Impl/imgui_impl_glfw.h"
 #include "ImGui_Impl/imgui_impl_opengl3.h"
 
-void CheckErrorInShader(unsigned int shaderId);
-
-EngineContext::EngineContext()
-	:RenderEvent(), m_window(),Camera()
-{
-	Renderer = RenderContext();
-}
-
-EngineContext::~EngineContext()
-{
-	glfwTerminate();
-}
-void EngineContext::Init_GLFW()
-{
-	glfwInit();
-}
-
 void EngineContext::StartWindow(int width, int height, const char* title)
 {
 
 	m_window = glfwCreateWindow(width, height, title, NULL, NULL);
-
+	
+	Input::init(m_window);
 	if (!m_window)
 	{
 		glfwTerminate();
@@ -74,20 +58,20 @@ void EngineContext::StartWindow(int width, int height, const char* title)
 void EngineContext::StartRender()
 {
 	glEnable(GL_DEPTH_TEST);
-	float x=0, y=0, z=0;
+	float x = 0, y = 0, z = 0;
 	while (!glfwWindowShouldClose(m_window))
 	{
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0, 0.09f, 0.21f, 1.0f);
-		
+
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
-		
-		
+
+
 		RenderEvent();
-		Renderer.DrawAll();
+		RenderContext::getInstance().DrawAll();
 
 
 
@@ -104,22 +88,4 @@ void EngineContext::StartRender()
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();
-
-}
-
-
-
-
-void CheckErrorInShader(unsigned int shaderId)
-{
-	int success;
-	char infoLog[512];
-	GL_Call(glGetShaderiv(shaderId, GL_COMPILE_STATUS, &success));
-	if (!success)
-	{
-		GL_Call(glGetShaderInfoLog(shaderId, 512, NULL, infoLog));
-		std::cout << "ERROR::SHADER::COMPILATION_FAILED\n" << infoLog << std::endl;
-
-		__debugbreak();
-	}
 }

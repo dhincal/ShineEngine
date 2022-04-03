@@ -7,8 +7,6 @@
 #include <iostream>
 
 
-void CheckErrorInShader(unsigned int shaderId);
-
 void RenderContext::Draw(IndexBuffer ib, VertexArray va)
 {
 	va.Bind();

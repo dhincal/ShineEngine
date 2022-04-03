@@ -160,10 +160,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Components\Component.h" />
     <ClInclude Include="Entity\Camera.h" />
     <ClInclude Include="EngineContext.h" />
-    <ClInclude Include="Entity\GameObject.h" />
     <ClInclude Include="ImGui\imconfig.h" />
     <ClInclude Include="ImGui\imgui.h" />
     <ClInclude Include="ImGui\imgui_internal.h" />
@@ -172,6 +170,7 @@
     <ClInclude Include="ImGui\imstb_truetype.h" />
     <ClInclude Include="ImGui_Impl\imgui_impl_glfw.h" />
     <ClInclude Include="ImGui_Impl\imgui_impl_opengl3.h" />
+    <ClInclude Include="Entity\Input.h" />
     <ClInclude Include="Renderer\Shader.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Renderer\IndexBuffer.h" />
@@ -179,13 +178,10 @@
     <ClInclude Include="Renderer\VertexBuffer.h" />
     <ClInclude Include="Renderer\VertexArray.h" />
     <ClInclude Include="Renderer\VertexBufferLayout.h" />
-    <ClInclude Include="Components\TransformComponent.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Components\Component.cpp" />
     <ClCompile Include="Entity\Camera.cpp" />
     <ClCompile Include="EngineContext.cpp" />
-    <ClCompile Include="Entity\GameObject.cpp" />
     <ClCompile Include="glad.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -228,6 +224,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Entity\Input.cpp" />
     <ClCompile Include="Renderer\IndexBuffer.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdafx.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdafx.h</PrecompiledHeaderFile>
@@ -264,7 +261,6 @@
     </ClCompile>
     <ClCompile Include="Renderer\Shader.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="Components\TransformComponent.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

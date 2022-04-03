@@ -26,4 +26,9 @@
     <None Include="res\shaders\default.shader" />
     <None Include="res\shaders\Cube.shader" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\img\squirrel.bmp">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

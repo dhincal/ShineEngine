@@ -1,13 +1,14 @@
 ﻿#include <iostream>
 #include "EngineContext.h"
 
-#include "GLM/glm.hpp"
-#include "GLM/gtc/matrix_transform.hpp"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "GLM/mat4x4.hpp"
+#include <glm/mat4x4.hpp>
 #include <ImGui/imgui.h>
+#include <glm/gtx/rotate_vector.hpp>
+#include <glm/gtx/vector_angle.hpp>
 
-EngineContext engineContext;
 Shader* sh;
 Shader* sh_2;
 glm::mat4 mvp = glm::mat4(1.0f);
@@ -17,14 +18,14 @@ glm::vec3 modelPos;
 glm::vec3 modelPos_2;
 glm::vec3 CamRot;
 
-Camera cam;
+Camera cam = Camera(640, 480, { 0,0,0 });
 
 void sh1_PreRender();
 void sh2_PreRender();
 
 void OnRender()
 {
-	glm::vec3* pos = cam.GetPositionPointer();
+	glm::vec3* pos = &cam.Position;
 	
 
 	ImGui::Begin("Window 1");
@@ -38,19 +39,44 @@ void OnRender()
 
 	ImGui::End();
 
-	cam.SetRotation(CamRot);
-	cam.Refresh();
+
+	if (Input::getInstance().GetMouseButton(GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
+	{
+		glm::vec2 mousePos = Input::getInstance().GetMousePosition();
+		// Stores the coordinates of the cursor
+		double mouseX = mousePos.x;
+		double mouseY = mousePos.y;
+
+		float sensitivity = 0.5f;
+		// Normalizes and shifts the coordinates of the cursor such that they begin in the middle of the screen
+		// and then "transforms" them into degrees 
+		float rotX = sensitivity * (float)(mouseY - (cam.height / 2)) / cam.height;
+		float rotY = sensitivity * (float)(mouseX - (cam.width / 2)) / cam.width;
+
+		// Calculates upcoming vertical change in the Orientation
+		glm::vec3 newOrientation = glm::rotate(cam.Orientation, glm::radians(-rotX), glm::normalize(glm::cross(cam.Orientation, cam.Up)));
+
+		// Decides whether or not the next vertical Orientation is legal or not
+		if (abs(glm::angle(newOrientation, cam.Up) - glm::radians(90.0f)) <= glm::radians(85.0f))
+		{
+			cam.Orientation = newOrientation;
+		}
+
+		// Rotates the Orientation left and right
+		cam.Orientation = glm::rotate(cam.Orientation, glm::radians(-rotY), cam.Up);
+	}
+	
+
+
 	
 }
 
 int main()
 {
+	EngineContext::getInstance().SetRenderEvent(OnRender);
+	EngineContext::getInstance().StartWindow(640, 480, "Hello Engine");
 
-
-	engineContext.Init_GLFW();
-
-	engineContext.SetRenderEvent(OnRender);
-	engineContext.StartWindow(640, 480, "Hello Engine");
+	cam.PerspectiveMatrix(70,0.1f,100);
 
 	float Cube_Vertices[] = {
 		// front			
@@ -100,10 +126,10 @@ int main()
 	sh->SetPreRenderEvent(sh1_PreRender);
 	sh_2->SetPreRenderEvent(sh2_PreRender);
 
-	engineContext.Renderer.AddObject(&va, &vb, &ib, sh);
-	engineContext.Renderer.AddObject(&va, &vb, &ib, sh_2);
+	RenderContext::getInstance().AddObject(&va, &vb, &ib, sh);
+	RenderContext::getInstance().AddObject(&va, &vb, &ib, sh_2);
 
-	engineContext.StartRender();
+	EngineContext::getInstance().StartRender();
 }
 
 
@@ -122,7 +148,6 @@ void sh1_PreRender() {
 
 void sh2_PreRender() {
 
-
 	glm::mat4 model_2 = glm::translate(
 		glm::mat4(1.0f),			// matrix to translate
 		glm::vec3(modelPos_2.x, modelPos_2.y, modelPos_2.z)	// translation vector
@@ -131,4 +156,3 @@ void sh2_PreRender() {
 
 	sh_2->SetUniformMat4x4("mvp", glm::value_ptr(mvp_2));
 }
-

@@ -3,17 +3,23 @@
 #include "GLFW/glfw3.h"
 #include "Renderer/RenderContext.h"
 #include "Entity/Camera.h"
+#include "Entity/Input.h"
 
 
+class EngineContext {
 
-class EngineContext
-{
 public:
-	RenderContext Renderer;
-	Camera Camera;
+	static EngineContext& getInstance()
+	{ 
+		// Guaranteed to be destroyed.
+		// Instantiated on first use.
+		static EngineContext instance;
+		
+		glfwInit();
+		return instance;
+		
+	}
 
-	EngineContext();
-	void Init_GLFW();
 	void StartWindow(int width, int height, const char* title);
 	void StartRender();
 	void SetRenderEvent(void (EventFn)())
@@ -21,14 +27,18 @@ public:
 		RenderEvent = EventFn;
 	}
 
-	~EngineContext();
-	
-
 private:
+	EngineContext():RenderEvent(), m_window() {}                    // Constructor? (the {} brackets) are needed here.
+	~EngineContext()
+	{
+		glfwTerminate();
+	}
+
 	GLFWwindow* m_window;
 	void (*RenderEvent)();
 
-	
 
+public:
+	EngineContext(EngineContext const&) = delete;
+	void operator=(EngineContext const&) = delete;
 };
-

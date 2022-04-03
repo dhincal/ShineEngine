@@ -1,3 +1,36 @@
+#include "Camera.h"
+
+Camera::Camera(int width, int height, glm::vec3 position):viewMat(1.0f), projMat(1.0f)
+{
+	Camera::width = width;
+	Camera::height = height;
+
+	Position = position;
+
+}
+
+void Camera::PerspectiveMatrix(float FOVdeg, float nearPlane, float farPlane)
+{
+	glm::mat4 projection = glm::mat4(1.0f);
+	
+	viewMat = glm::lookAt(Position,Position+Orientation,Up);
+	projMat = glm::perspective(FOVdeg, (float)(width / height), nearPlane, farPlane);
+}
+
+glm::mat4 Camera::GetViewMatrix()
+{
+	viewMat = glm::lookAt(Position, Position + Orientation, Up);
+	return viewMat;
+}
+
+glm::mat4 Camera::GetProjMatrix()
+{
+	return projMat;
+}
+
+
+
+/*
 #include "../stdafx.h"
 #include "Camera.h"
 
@@ -59,3 +92,4 @@ glm::mat4 Camera::GetProjMatrix()
 		10.0f //far
 	);
 }
+*/
