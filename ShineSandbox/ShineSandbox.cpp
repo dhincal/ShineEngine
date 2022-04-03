@@ -9,32 +9,21 @@
 
 EngineContext engineContext;
 Shader* sh;
+Shader* sh_2;
 glm::mat4 mvp = glm::mat4(1.0f);
+glm::mat4 mvp_2 = glm::mat4(1.0f);
 
 glm::vec3 modelPos;
+glm::vec3 modelPos_2;
 glm::vec3 CamRot;
 
 Camera cam;
 
+void sh1_PreRender();
+void sh2_PreRender();
+
 void OnRender()
 {
-	sh->Bind();
-	sh->SetUniformMat4x4("mvp", glm::value_ptr(mvp));
-
-
-	glm::mat4 model = glm::translate(
-		glm::mat4(1.0f),			// matrix to translate
-		glm::vec3(modelPos.x, modelPos.y, modelPos.z)	// translation vector
-	);
-	glm::mat4 projection = glm::perspective(
-		((float)640 / 480) / (16.0f / 9.0f), // FOV
-		640.0f / 480.0f, // aspect ratio
-		0.1f, //near
-		10.0f //far
-	);
-
-
-	mvp = projection * cam.GetViewMatrix() * model;
 	glm::vec3* pos = cam.GetPositionPointer();
 	
 
@@ -44,6 +33,7 @@ void OnRender()
 
 	ImGui::DragFloat3("Eye Pos", &pos->x, 0.005f);
 	ImGui::DragFloat3("Model Pos", &modelPos[0],0.005f);
+	ImGui::DragFloat3("Model Pos 2", &modelPos_2[0],0.005f);
 	ImGui::DragFloat3("Rotation ",&CamRot.x);
 
 	ImGui::End();
@@ -104,12 +94,56 @@ int main()
 	va.AddBuffer(vb, layout);
 
 	IndexBuffer ib(indices, 36);
-	sh = new Shader("res/Cube.shader");
+	sh = new Shader("res/shaders/Cube.shader");
+	sh_2 = new Shader("res/shaders/Cube.shader");
 
+	sh->SetPreRenderEvent(sh1_PreRender);
+	sh_2->SetPreRenderEvent(sh2_PreRender);
 
 	engineContext.Renderer.AddObject(&va, &vb, &ib, sh);
+	engineContext.Renderer.AddObject(&va, &vb, &ib, sh_2);
 
 	engineContext.StartRender();
 }
 
+
+
+void sh1_PreRender() {
+	glm::mat4 projection = glm::perspective(
+		((float)640 / 480) / (16.0f / 9.0f), // FOV
+		640.0f / 480.0f, // aspect ratio
+		0.1f, //near
+		10.0f //far
+	);
+
+	glm::mat4 model = glm::translate(
+		glm::mat4(1.0f),			// matrix to translate
+		glm::vec3(modelPos.x, modelPos.y, modelPos.z)	// translation vector
+	);
+
+	mvp = projection * cam.GetViewMatrix() * model;
+
+
+	
+
+
+	sh->SetUniformMat4x4("mvp", glm::value_ptr(mvp));
+}
+
+void sh2_PreRender() {
+	glm::mat4 projection = glm::perspective(
+		((float)640 / 480) / (16.0f / 9.0f), // FOV
+		640.0f / 480.0f, // aspect ratio
+		0.1f, //near
+		10.0f //far
+	);
+
+	glm::mat4 model_2 = glm::translate(
+		glm::mat4(1.0f),			// matrix to translate
+		glm::vec3(modelPos_2.x, modelPos_2.y, modelPos_2.z)	// translation vector
+	);
+	mvp_2 = projection * cam.GetViewMatrix() * model_2;
+
+	sh_2->SetUniformMat4x4("mvp", glm::value_ptr(mvp_2));
+}
 

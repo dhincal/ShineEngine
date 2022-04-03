@@ -27,5 +27,6 @@ public:
 	void AddObject(VertexArray* va,  VertexBuffer* vb,IndexBuffer* ib);
 
 
+
 };
 

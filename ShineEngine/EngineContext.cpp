@@ -85,8 +85,8 @@ void EngineContext::StartRender()
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 		
+		
 		RenderEvent();
-
 		Renderer.DrawAll();
 
 

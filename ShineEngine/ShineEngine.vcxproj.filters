@@ -39,9 +39,6 @@
     <ClInclude Include="Renderer\Shader.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\stdafx.h">
-      <Filter>Üst Bilgi Dosyaları</Filter>
-    </ClInclude>
     <ClInclude Include="ImGui_Impl\imgui_impl_glfw.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
@@ -92,9 +89,6 @@
     <ClCompile Include="Renderer\VertexBufferLayout.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Kaynak Dosyalar</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer\Shader.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
@@ -117,6 +111,9 @@
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Camera.cpp">
+      <Filter>Kaynak Dosyalar</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
   </ItemGroup>

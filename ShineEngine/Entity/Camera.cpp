@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "../stdafx.h"
 #include "Camera.h"
 
 glm::vec3 upVector = glm::vec3(0.0f, 1.0f, 0.0f);

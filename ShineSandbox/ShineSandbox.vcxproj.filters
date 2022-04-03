@@ -20,10 +20,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\Basic.shader" />
-    <None Include="res\Fragment.shader" />
-    <None Include="res\Vertex.shader" />
-    <None Include="res\default.shader" />
-    <None Include="res\Cube.shader" />
+    <None Include="res\shaders\Basic.shader" />
+    <None Include="res\shaders\Fragment.shader" />
+    <None Include="res\shaders\Vertex.shader" />
+    <None Include="res\shaders\default.shader" />
+    <None Include="res\shaders\Cube.shader" />
   </ItemGroup>
 </Project>

@@ -20,7 +20,7 @@ public:
 	{
 		RenderEvent = EventFn;
 	}
-	
+
 	~EngineContext();
 	
 
