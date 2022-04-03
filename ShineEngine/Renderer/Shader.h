@@ -1,4 +1,5 @@
 #pragma once 
+#include "../stdafx.h"
 
 #include <string>
 #include <sstream>
@@ -27,6 +28,8 @@ private:
 	unsigned int CompileShader(unsigned int type, const std::string& source);
 	unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader);
 	unsigned int GetUniformLocation(const std::string& name);
+	void (*PreRenderEventFn)();
+	
 
 public:
 	Shader(const std::string& filePath);
@@ -39,7 +42,16 @@ public:
 	void SetUniform1f(const std::string& name, float v0);
 	void SetUniform3f(const std::string& name, float v0, float v1, float v2);
 	void SetUniformMat4x4(const std::string& name, const float* ptr, int count=1, bool transpose=false);
-
+	void SetPreRenderEvent(void (EventFn)())
+	{
+		PreRenderEventFn = EventFn;
+	}
+	void CallPreRender() {
+		
+		//ASSERT(PreRenderEventFn);
+		PreRenderEventFn();
+		
+	}
 
 };
 

@@ -26,10 +26,10 @@ static bool GL_LogCall(const char* function, const char* file, int line)
 }
 
 
-#define ASSERT(x) if(!(x)) __debugbreak();
+#define ASSERT(x) if(!(x)) __debugbreak()
 #define GL_Call(x) GL_ClearError();\
 	x;\
-	ASSERT(GL_LogCall(#x,__FILE__,__LINE__))
+	ASSERT(GL_LogCall(#x,__FILE__,__LINE__));
 
 
 

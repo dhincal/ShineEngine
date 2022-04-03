@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "../stdafx.h"
 
 #include "GLAD/glad.h"
 
@@ -33,14 +33,14 @@ void RenderContext::DrawAll()
 
 			shaderin yerinin onemi yok (?)
 		*/
-
+		
 		if (it_Element->shader)
 			it_Element->shader->Bind();
 		it_Element->vertexArray->Bind();
 		it_Element->vertexBuffer->Bind();
 		it_Element->indexBuffer->Bind();
 
-
+		it_Element->shader->CallPreRender();
 		GL_Call(glDrawElements(GL_TRIANGLES, it_Element->indexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr));
 
 
@@ -70,38 +70,3 @@ void RenderContext::AddObject(VertexArray* va, VertexBuffer* vb, IndexBuffer* ib
 	vb->Unbind();
 	ib->Unbind();
 }
-
-
-//void RenderContext::Setup_Triangle()
-//{
-//	float vertices[] = {
-//	  -0.5f, -0.5f,  // sol alt
-//	   0.5f, -0.5f,  // sag alt
-//	   0.5f,  0.5f,  // sag ust
-//	  -0.5f,  0.5f,  // sol ust
-//	};
-//
-//	unsigned int indices[] = {
-//		0,1,2,
-//		2,3,0
-//	};
-//
-//	
-//	
-//	// VAO
-//	
-//	VertexArray va;
-//	VertexBuffer vb(vertices,sizeof(vertices));
-//
-//	VertexBufferLayout layout;
-//	layout.Push<float>(2);
-//	va.AddBuffer(vb,layout);
-//
-//
-//	IndexBuffer ib(indices,6);
-//
-//	
-//	
-//
-//	
-//}

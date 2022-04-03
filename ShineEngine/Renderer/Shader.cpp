@@ -1,9 +1,6 @@
-//for dummy use
-#include "stdafx.h"
 #include "../stdafx.h"
 
 #include "Shader.h"
-
 #include <GLAD/glad.h>
 
 
