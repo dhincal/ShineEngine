@@ -104,7 +104,7 @@ int main()
 	va.AddBuffer(vb, layout);
 
 	IndexBuffer ib(indices, 36);
-	sh = new Shader("res/Cube.shader");
+	sh = new Shader("res/shaders/Cube.shader");
 
 
 	engineContext.Renderer.AddObject(&va, &vb, &ib, sh);
