@@ -18,6 +18,7 @@ public:
 	Camera();
 
 	glm::mat4 GetViewMatrix();
+	glm::mat4 GetProjMatrix();
 	glm::vec3* GetPositionPointer();
 
 	void Refresh();

@@ -49,3 +49,13 @@ glm::mat4 Camera::GetViewMatrix()
 {
 	return m_view;
 }
+
+glm::mat4 Camera::GetProjMatrix()
+{
+	return glm::perspective(
+		((float)640 / 480) / (16.0f / 9.0f), // FOV
+		640.0f / 480.0f, // aspect ratio
+		0.1f, //near
+		10.0f //far
+	);
+}

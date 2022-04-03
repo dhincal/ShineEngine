@@ -109,40 +109,25 @@ int main()
 
 
 void sh1_PreRender() {
-	glm::mat4 projection = glm::perspective(
-		((float)640 / 480) / (16.0f / 9.0f), // FOV
-		640.0f / 480.0f, // aspect ratio
-		0.1f, //near
-		10.0f //far
-	);
-
 	glm::mat4 model = glm::translate(
 		glm::mat4(1.0f),			// matrix to translate
 		glm::vec3(modelPos.x, modelPos.y, modelPos.z)	// translation vector
 	);
 
-	mvp = projection * cam.GetViewMatrix() * model;
-
-
-	
-
+	mvp = cam.GetProjMatrix() * cam.GetViewMatrix() * model;
 
 	sh->SetUniformMat4x4("mvp", glm::value_ptr(mvp));
+	
 }
 
 void sh2_PreRender() {
-	glm::mat4 projection = glm::perspective(
-		((float)640 / 480) / (16.0f / 9.0f), // FOV
-		640.0f / 480.0f, // aspect ratio
-		0.1f, //near
-		10.0f //far
-	);
+
 
 	glm::mat4 model_2 = glm::translate(
 		glm::mat4(1.0f),			// matrix to translate
 		glm::vec3(modelPos_2.x, modelPos_2.y, modelPos_2.z)	// translation vector
 	);
-	mvp_2 = projection * cam.GetViewMatrix() * model_2;
+	mvp_2 = cam.GetProjMatrix() * cam.GetViewMatrix() * model_2;
 
 	sh_2->SetUniformMat4x4("mvp", glm::value_ptr(mvp_2));
 }
